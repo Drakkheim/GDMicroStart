@@ -1,0 +1,203 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqjpp2d5k50hf"]
+
+[ext_resource type="Script" uid="uid://bti3fs3qoxh8u" path="res://scripts/level_manager.gd" id="1_o5qli"]
+
+[node name="Main" type="Node2D"]
+
+[node name="LevelManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_o5qli")
+metadata/_custom_type_script = "uid://bti3fs3qoxh8u"
+
+[node name="Loading" type="Node2D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="LoadingCL" type="CanvasLayer" parent="Loading"]
+unique_name_in_owner = true
+visible = false
+
+[node name="Attract" type="Node2D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="AttractCL" type="CanvasLayer" parent="Attract"]
+unique_name_in_owner = true
+visible = false
+
+[node name="control" type="Control" parent="Attract/AttractCL"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HighScoreContainer" type="PanelContainer" parent="Attract/AttractCL/control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+offset_left = -92.0
+offset_top = -127.0
+offset_right = 93.0
+offset_bottom = -59.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Attract/AttractCL/control/HighScoreContainer"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Highscore Title" type="Label" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "High Score"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HighScore" type="Label" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "0"
+
+[node name="HighScorePlayer" type="Label" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = " ----"
+
+[node name="PlayButton" type="Button" parent="Attract/AttractCL/control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -49.0
+offset_top = -15.0
+offset_right = 51.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play"
+
+[node name="GameTitle" type="Label" parent="Attract/AttractCL/control"]
+layout_mode = 0
+offset_left = -73.0
+offset_top = -194.0
+offset_right = 65.0
+offset_bottom = -149.0
+theme_override_font_sizes/font_size = 32
+text = "MyGame"
+horizontal_alignment = 1
+
+[node name="Playing" type="Node2D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="PlayingCL" type="CanvasLayer" parent="Playing"]
+unique_name_in_owner = true
+visible = false
+
+[node name="CurrentScoreLabel" type="Label" parent="Playing/PlayingCL"]
+unique_name_in_owner = true
+offset_left = 31.0
+offset_top = 26.0
+offset_right = 71.0
+offset_bottom = 49.0
+text = "0"
+
+[node name="DebugScoreButton" type="Button" parent="Playing/PlayingCL"]
+offset_left = 5.0
+offset_top = 103.0
+offset_right = 136.0
+offset_bottom = 134.0
+text = "DEBUG score +1"
+
+[node name="DebugEndGameButton" type="Button" parent="Playing/PlayingCL"]
+offset_left = 6.0
+offset_top = 142.0
+offset_right = 152.0
+offset_bottom = 173.0
+text = "DEBUG End Game
+"
+
+[node name="GameOver" type="Node2D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="GameOverCL" type="CanvasLayer" parent="GameOver"]
+unique_name_in_owner = true
+
+[node name="GameOverDoneButton" type="Button" parent="GameOver/GameOverCL"]
+offset_left = 551.0
+offset_top = 358.0
+offset_right = 600.0
+offset_bottom = 389.0
+text = "Done"
+
+[node name="Game Over Label" type="Label" parent="GameOver/GameOverCL"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -102.0
+offset_top = 142.0
+offset_right = 102.0
+offset_bottom = 165.0
+grow_horizontal = 2
+text = "G   A   M   E          O   V   E   R"
+
+[node name="UpdateHighScore" type="PanelContainer" parent="GameOver/GameOverCL"]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -98.0
+offset_top = 217.0
+offset_right = 98.0
+offset_bottom = 302.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver/GameOverCL/UpdateHighScore"]
+layout_mode = 2
+
+[node name="NewHighscore label" type="Label" parent="GameOver/GameOverCL/UpdateHighScore/VBoxContainer"]
+layout_mode = 2
+text = "NEW HIGH SCORE"
+horizontal_alignment = 1
+
+[node name="LastRoundScoreLabel" type="Label" parent="GameOver/GameOverCL/UpdateHighScore/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "10000"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameOver/GameOverCL/UpdateHighScore/VBoxContainer"]
+layout_mode = 2
+
+[node name="InitialsLabel" type="Label" parent="GameOver/GameOverCL/UpdateHighScore/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Initials:"
+
+[node name="myInitials" type="LineEdit" parent="GameOver/GameOverCL/UpdateHighScore/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "AAA"
+alignment = 1
+max_length = 3
+
+[node name="UpdateInitials" type="Button" parent="GameOver/GameOverCL/UpdateHighScore/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Submit"
+
+[connection signal="pressed" from="Attract/AttractCL/control/PlayButton" to="LevelManager" method="_on_play_button_pressed"]
+[connection signal="pressed" from="Playing/PlayingCL/DebugScoreButton" to="LevelManager" method="change_score" binds= [1]]
+[connection signal="pressed" from="Playing/PlayingCL/DebugEndGameButton" to="LevelManager" method="end_game"]
+[connection signal="pressed" from="GameOver/GameOverCL/GameOverDoneButton" to="LevelManager" method="_on_game_over_done_button_pressed"]
+[connection signal="pressed" from="GameOver/GameOverCL/UpdateHighScore/VBoxContainer/HBoxContainer/UpdateInitials" to="LevelManager" method="update_initials"]

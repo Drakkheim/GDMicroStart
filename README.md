@@ -1,2 +1,2 @@
 # GDMicroStart
-Godot Single Screen Micro Game Quicstart
+a Godot Single Screen Micro Game Quicstart
