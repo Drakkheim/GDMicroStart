@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0rp8018a8a6o"]
+
+[ext_resource type="Texture2D" uid="uid://c38josr8s1et2" path="res://images/shot.png" id="1_cupcd"]
+[ext_resource type="Script" uid="uid://dm3gl878fi0n7" path="res://scripts/shot.gd" id="2_r6d4o"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cupcd"]
+radius = 3.0
+height = 12.0
+
+[node name="Shot" type="Sprite2D"]
+modulate = Color(0.945768, 0.881793, 0.667962, 1)
+self_modulate = Color(6, 6, 6, 1)
+z_index = -1
+texture = ExtResource("1_cupcd")
+script = ExtResource("2_r6d4o")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_cupcd")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

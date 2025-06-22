@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dv4q17kleelya"]
+
+[ext_resource type="Texture2D" uid="uid://bmx1t6tr86t8b" path="res://images/basicShip.png" id="1_nqx6x"]
+[ext_resource type="Script" uid="uid://b8vbvwh8olv8u" path="res://scripts/basic_ship.gd" id="2_qc0et"]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_o6xl0"]
+points = PackedVector2Array(1, -31, 28, 16, -29, 17)
+
+[node name="BasicShip" type="Sprite2D"]
+texture = ExtResource("1_nqx6x")
+script = ExtResource("2_qc0et")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("ConvexPolygonShape2D_o6xl0")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

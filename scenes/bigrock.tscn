@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bf0ldph0qfbma"]
+
+[ext_resource type="Texture2D" uid="uid://dbj78viwo1eic" path="res://images/bigrock.png" id="1_b7afm"]
+[ext_resource type="Script" uid="uid://c5ibt8ul5jysp" path="res://scenes/bigrock.gd" id="2_tdcw6"]
+
+[node name="Bigrock" type="Sprite2D" groups=["rocks"]]
+texture = ExtResource("1_b7afm")
+script = ExtResource("2_tdcw6")
+rock_size = 2
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(-1, 42, 24, 38, 40, 32, 44, 9, 38, -30, 34, -41, 6, -45, -10, -40, -34, -25, -45, -3, -37, 18, -36, 31, -24, 39, -8, 41)

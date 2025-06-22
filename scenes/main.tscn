@@ -1,12 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqjpp2d5k50hf"]
+[gd_scene load_steps=6 format=3 uid="uid://bqjpp2d5k50hf"]
 
 [ext_resource type="Script" uid="uid://bti3fs3qoxh8u" path="res://scripts/level_manager.gd" id="1_o5qli"]
+[ext_resource type="Theme" uid="uid://38ot4rbxix72" path="res://resources/gameTheme.tres" id="4_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://bycmkckex4hnh" path="res://images/space.png" id="5_tbgi4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sugp2"]
+radius = 117.478
+
+[sub_resource type="Environment" id="Environment_sugp2"]
+background_mode = 3
+glow_enabled = true
+glow_levels/2 = 0.3
+glow_levels/3 = 0.3
+glow_levels/5 = 0.0
+glow_blend_mode = 1
 
 [node name="Main" type="Node2D"]
 
 [node name="LevelManager" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_o5qli")
+total_bullets = 6
 metadata/_custom_type_script = "uid://bti3fs3qoxh8u"
 
 [node name="Loading" type="Node2D" parent="."]
@@ -54,6 +68,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Highscore Title" type="Label" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
 text = "High Score"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer"]
@@ -64,12 +79,14 @@ alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 26
 text = "0"
 
 [node name="HighScorePlayer" type="Label" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 26
 text = " ----"
 
 [node name="PlayButton" type="Button" parent="Attract/AttractCL/control"]
@@ -80,37 +97,94 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -49.0
-offset_top = -15.0
+offset_top = 21.0
 offset_right = 51.0
-offset_bottom = 16.0
+offset_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 32
 text = "Play"
 
 [node name="GameTitle" type="Label" parent="Attract/AttractCL/control"]
-layout_mode = 0
-offset_left = -73.0
-offset_top = -194.0
-offset_right = 65.0
-offset_bottom = -149.0
-theme_override_font_sizes/font_size = 32
-text = "MyGame"
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -144.0
+offset_top = -209.0
+offset_right = 145.0
+offset_bottom = -164.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.776471, 0.831373, 0, 1)
+theme_override_font_sizes/font_size = 48
+text = "Space Rock Blaster"
 horizontal_alignment = 1
 
 [node name="Playing" type="Node2D" parent="."]
 unique_name_in_owner = true
-visible = false
 
 [node name="PlayingCL" type="CanvasLayer" parent="Playing"]
 unique_name_in_owner = true
-visible = false
+
+[node name="scoreLabel" type="Label" parent="Playing/PlayingCL"]
+offset_left = 27.0
+offset_top = 21.0
+offset_right = 83.0
+offset_bottom = 44.0
+text = "SCORE:"
+
+[node name="roundLabel" type="Label" parent="Playing/PlayingCL"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.0
+offset_top = 29.0
+offset_right = -6.0
+offset_bottom = 52.0
+grow_horizontal = 2
+text = "ROUND:"
+
+[node name="Round" type="Label" parent="Playing/PlayingCL"]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 4.0
+offset_top = 29.0
+offset_right = 68.0
+offset_bottom = 52.0
+grow_horizontal = 2
+text = "1"
+
+[node name="LivesLabel" type="Label" parent="Playing/PlayingCL"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -127.0
+offset_top = 33.0
+offset_right = -71.0
+offset_bottom = 56.0
+grow_horizontal = 0
+text = "LIVES:"
+
+[node name="Lives" type="Label" parent="Playing/PlayingCL"]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -73.0
+offset_top = 33.0
+offset_right = -17.0
+offset_bottom = 56.0
+grow_horizontal = 0
+text = "3"
 
 [node name="CurrentScoreLabel" type="Label" parent="Playing/PlayingCL"]
 unique_name_in_owner = true
-offset_left = 31.0
-offset_top = 26.0
-offset_right = 71.0
-offset_bottom = 49.0
+offset_left = 87.0
+offset_top = 22.0
+offset_right = 127.0
+offset_bottom = 45.0
 text = "0"
 
 [node name="DebugScoreButton" type="Button" parent="Playing/PlayingCL"]
@@ -125,8 +199,20 @@ offset_left = 6.0
 offset_top = 142.0
 offset_right = 152.0
 offset_bottom = 173.0
+theme = ExtResource("4_tbgi4")
 text = "DEBUG End Game
 "
+
+[node name="playerSpawn" type="Node2D" parent="Playing"]
+unique_name_in_owner = true
+position = Vector2(555, 302)
+
+[node name="safeSpawnArea" type="Area2D" parent="Playing/playerSpawn"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Playing/playerSpawn/safeSpawnArea"]
+shape = SubResource("CircleShape2D_sugp2")
 
 [node name="GameOver" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -134,6 +220,7 @@ visible = false
 
 [node name="GameOverCL" type="CanvasLayer" parent="GameOver"]
 unique_name_in_owner = true
+visible = false
 
 [node name="GameOverDoneButton" type="Button" parent="GameOver/GameOverCL"]
 offset_left = 551.0
@@ -196,8 +283,123 @@ max_length = 3
 layout_mode = 2
 text = "Submit"
 
+[node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(576, 323)
+
+[node name="Space" type="Sprite2D" parent="."]
+z_index = -4
+position = Vector2(107, 104)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space2" type="Sprite2D" parent="Space"]
+position = Vector2(216, -3)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space3" type="Sprite2D" parent="Space"]
+position = Vector2(139, 202)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space4" type="Sprite2D" parent="Space"]
+position = Vector2(-63, 231)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space5" type="Sprite2D" parent="Space"]
+position = Vector2(11, 439)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space6" type="Sprite2D" parent="Space"]
+position = Vector2(246, 425)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space7" type="Sprite2D" parent="Space"]
+position = Vector2(457, 422)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space8" type="Sprite2D" parent="Space"]
+position = Vector2(365, 206)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space9" type="Sprite2D" parent="Space"]
+position = Vector2(413, -19)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space10" type="Sprite2D" parent="Space"]
+position = Vector2(585, 121)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space11" type="Sprite2D" parent="Space"]
+position = Vector2(637, -80)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space12" type="Sprite2D" parent="Space"]
+position = Vector2(843, -72)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space13" type="Sprite2D" parent="Space"]
+position = Vector2(1009, -16)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space14" type="Sprite2D" parent="Space"]
+position = Vector2(982, 148)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space15" type="Sprite2D" parent="Space"]
+position = Vector2(774, 132)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space16" type="Sprite2D" parent="Space"]
+position = Vector2(583, 267)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space17" type="Sprite2D" parent="Space"]
+position = Vector2(816, 335)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space18" type="Sprite2D" parent="Space"]
+position = Vector2(640, 472)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space19" type="Sprite2D" parent="Space"]
+position = Vector2(864, 458)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space20" type="Sprite2D" parent="Space"]
+position = Vector2(1004, 431)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="Space21" type="Sprite2D" parent="Space"]
+position = Vector2(1022, 264)
+texture = ExtResource("5_tbgi4")
+metadata/_edit_lock_ = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sugp2")
+
 [connection signal="pressed" from="Attract/AttractCL/control/PlayButton" to="LevelManager" method="_on_play_button_pressed"]
 [connection signal="pressed" from="Playing/PlayingCL/DebugScoreButton" to="LevelManager" method="change_score" binds= [1]]
 [connection signal="pressed" from="Playing/PlayingCL/DebugEndGameButton" to="LevelManager" method="end_game"]
+[connection signal="area_entered" from="Playing/playerSpawn/safeSpawnArea" to="LevelManager" method="_on_safe_spawn_area_area_entered"]
+[connection signal="area_exited" from="Playing/playerSpawn/safeSpawnArea" to="LevelManager" method="_on_safe_spawn_area_area_exited"]
 [connection signal="pressed" from="GameOver/GameOverCL/GameOverDoneButton" to="LevelManager" method="_on_game_over_done_button_pressed"]
 [connection signal="pressed" from="GameOver/GameOverCL/UpdateHighScore/VBoxContainer/HBoxContainer/UpdateInitials" to="LevelManager" method="update_initials"]
