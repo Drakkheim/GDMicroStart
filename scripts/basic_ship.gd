@@ -7,6 +7,9 @@ var rotation_direction:float = 0
 @export var thrust_acceleration = 320.0;
 @export var rotateSpeed = 180
 @export var bulletSpeed = 300;
+@onready var thrust: Sprite2D = %thrust
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var audio_stream_player_2d_2: AudioStreamPlayer2D = $AudioStreamPlayer2D2
 
 
 const SHOT = preload("res://scenes/shot.tscn")
@@ -29,6 +32,10 @@ func _process(delta: float) -> void:
 		if isThrusting:
 			var forward_vector = Vector2(0, -1).rotated(rotation)
 			current_velocity += forward_vector * thrust_acceleration * delta
+			thrust.show() 
+		else:
+			if thrust.visible:
+				thrust.hide()
 		position += current_velocity * delta	
 		#lazylooping 
 		if position.x < 0:
@@ -45,8 +52,10 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Thrust"):
 		isThrusting = true;
+		audio_stream_player_2d_2.play()
 	if event.is_action_released("Thrust"):
 		isThrusting = false;
+		audio_stream_player_2d_2.stop()
 	if event.is_action_pressed("RotateCCW"):
 		rotation_direction = -1.0;
 	if event.is_action_released("RotateCCW"):
@@ -58,6 +67,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Shoot"):
 		if Globals.level_manager.live_bullets < Globals.level_manager.total_bullets:
 			var blt = SHOT.instantiate()
+			audio_stream_player_2d.play()
 			var forward_vector = Vector2(0, -1).rotated(rotation)
 			var shorV = current_velocity + (forward_vector * bulletSpeed)
 			blt.global_position =global_position

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c7avsa5l2u5vn"
+path="res://.godot/imported/Metal Vol2 Good Luck Intensity 1.wav-fc3a54bd930977715fc08b6f83478b5d.sample"
+
+[deps]
+
+source_file="res://resources/Metal Vol2 Good Luck Intensity 1.wav"
+dest_files=["res://.godot/imported/Metal Vol2 Good Luck Intensity 1.wav-fc3a54bd930977715fc08b6f83478b5d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

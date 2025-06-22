@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d04lw7xl2052y"
+path="res://.godot/imported/Metal Vol2 Good Luck Main.wav-fb8f240cc6b697c5861aca1c7ad008f6.sample"
+
+[deps]
+
+source_file="res://resources/Metal Vol2 Good Luck Main.wav"
+dest_files=["res://.godot/imported/Metal Vol2 Good Luck Main.wav-fb8f240cc6b697c5861aca1c7ad008f6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

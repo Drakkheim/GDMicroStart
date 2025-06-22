@@ -1,8 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqjpp2d5k50hf"]
+[gd_scene load_steps=16 format=3 uid="uid://bqjpp2d5k50hf"]
 
 [ext_resource type="Script" uid="uid://bti3fs3qoxh8u" path="res://scripts/level_manager.gd" id="1_o5qli"]
 [ext_resource type="Theme" uid="uid://38ot4rbxix72" path="res://resources/gameTheme.tres" id="4_tbgi4"]
+[ext_resource type="AudioStream" uid="uid://dw0r1fqa6pp36" path="res://resources/Sci Fi Explosion 10.wav" id="4_tefeu"]
+[ext_resource type="AudioStream" uid="uid://0t1v1gc6t5k6" path="res://resources/Servo Small 7_2.wav" id="5_eb6dy"]
+[ext_resource type="AudioStream" uid="uid://dhpq26kehe834" path="res://resources/Sci Fi Explosion 12.wav" id="5_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://bycmkckex4hnh" path="res://images/space.png" id="5_tbgi4"]
+[ext_resource type="AudioStream" uid="uid://bot0it6fm10ab" path="res://resources/Click 7.wav" id="6_tefeu"]
+[ext_resource type="Script" uid="uid://2fj4rxudcfi6" path="res://OvaniPlugin/OvaniPlayer.gd" id="7_ya4ey"]
+[ext_resource type="Script" uid="uid://cwyhgykn7hnlp" path="res://OvaniPlugin/OvaniSong.gd" id="8_eb6dy"]
+[ext_resource type="AudioStream" uid="uid://c7avsa5l2u5vn" path="res://resources/Metal Vol2 Good Luck Intensity 1.wav" id="9_trceg"]
+[ext_resource type="AudioStream" uid="uid://6s2o8pks87hv" path="res://resources/Metal Vol2 Good Luck Intensity 2.wav" id="10_a8y0u"]
+[ext_resource type="AudioStream" uid="uid://d04lw7xl2052y" path="res://resources/Metal Vol2 Good Luck Main.wav" id="11_jkv2x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sugp2"]
 radius = 117.478
@@ -14,6 +23,15 @@ glow_levels/2 = 0.3
 glow_levels/3 = 0.3
 glow_levels/5 = 0.0
 glow_blend_mode = 1
+
+[sub_resource type="Resource" id="Resource_jbj1t"]
+script = ExtResource("8_eb6dy")
+Intensity1 = ExtResource("9_trceg")
+Intensity2 = ExtResource("10_a8y0u")
+Intensity3 = ExtResource("11_jkv2x")
+ReverbTail = 0.0
+SongMode = 0
+metadata/_custom_type_script = "uid://cwyhgykn7hnlp"
 
 [node name="Main" type="Node2D"]
 
@@ -37,7 +55,6 @@ visible = false
 
 [node name="AttractCL" type="CanvasLayer" parent="Attract"]
 unique_name_in_owner = true
-visible = false
 
 [node name="control" type="Control" parent="Attract/AttractCL"]
 layout_mode = 3
@@ -73,6 +90,7 @@ text = "High Score"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 15
 alignment = 1
 
 [node name="HighScore" type="Label" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer/HBoxContainer"]
@@ -87,7 +105,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 26
-text = " ----"
+text = " ---"
 
 [node name="PlayButton" type="Button" parent="Attract/AttractCL/control"]
 layout_mode = 1
@@ -172,22 +190,23 @@ unique_name_in_owner = true
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -73.0
+offset_left = -64.0
 offset_top = 33.0
-offset_right = -17.0
+offset_right = -8.0
 offset_bottom = 56.0
 grow_horizontal = 0
 text = "3"
 
 [node name="CurrentScoreLabel" type="Label" parent="Playing/PlayingCL"]
 unique_name_in_owner = true
-offset_left = 87.0
-offset_top = 22.0
-offset_right = 127.0
-offset_bottom = 45.0
+offset_left = 106.0
+offset_top = 20.0
+offset_right = 146.0
+offset_bottom = 43.0
 text = "0"
 
 [node name="DebugScoreButton" type="Button" parent="Playing/PlayingCL"]
+visible = false
 offset_left = 5.0
 offset_top = 103.0
 offset_right = 136.0
@@ -195,6 +214,7 @@ offset_bottom = 134.0
 text = "DEBUG score +1"
 
 [node name="DebugEndGameButton" type="Button" parent="Playing/PlayingCL"]
+visible = false
 offset_left = 6.0
 offset_top = 142.0
 offset_right = 152.0
@@ -395,6 +415,37 @@ metadata/_edit_lock_ = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sugp2")
+
+[node name="rockBang1" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_tefeu")
+
+[node name="shipBoom" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_tefeu")
+volume_db = 19.0
+pitch_scale = 0.8
+
+[node name="shipSpawn" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_eb6dy")
+pitch_scale = 0.4
+
+[node name="rockBang2" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_o6xl0")
+
+[node name="buttonClick" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("6_tefeu")
+
+[node name="OvaniPlayer" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_ya4ey")
+QueuedSongs = Array[ExtResource("8_eb6dy")]([SubResource("Resource_jbj1t")])
+Volume = -14.0
+LoopQueue = true
+metadata/_custom_type_script = "uid://2fj4rxudcfi6"
 
 [connection signal="pressed" from="Attract/AttractCL/control/PlayButton" to="LevelManager" method="_on_play_button_pressed"]
 [connection signal="pressed" from="Playing/PlayingCL/DebugScoreButton" to="LevelManager" method="change_score" binds= [1]]

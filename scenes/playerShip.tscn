@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dv4q17kleelya"]
+[gd_scene load_steps=7 format=3 uid="uid://dv4q17kleelya"]
 
 [ext_resource type="Texture2D" uid="uid://bmx1t6tr86t8b" path="res://images/basicShip.png" id="1_nqx6x"]
 [ext_resource type="Script" uid="uid://b8vbvwh8olv8u" path="res://scripts/basic_ship.gd" id="2_qc0et"]
+[ext_resource type="Texture2D" uid="uid://bsc17indqyhen" path="res://images/basicShipthurst.png" id="3_qc0et"]
+[ext_resource type="AudioStream" uid="uid://dcj6yxwtrq7cl" path="res://resources/Weapon 01 Shoot 1.wav" id="4_dbw2a"]
+[ext_resource type="AudioStream" uid="uid://bh63my8ckg3li" path="res://resources/rocketthrustmaxx-100019.mp3" id="5_ymwsx"]
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_o6xl0"]
 points = PackedVector2Array(1, -31, 28, 16, -29, 17)
@@ -15,5 +18,18 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("ConvexPolygonShape2D_o6xl0")
+
+[node name="thrust" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+modulate = Color(6.16, 7.78, 7.79, 1)
+z_index = -1
+texture = ExtResource("3_qc0et")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_dbw2a")
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_ymwsx")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

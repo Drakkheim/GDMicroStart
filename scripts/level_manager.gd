@@ -8,10 +8,14 @@ const SMALL_ROCK = preload("res://scenes/smallRock.tscn")
 const PLAYER_SHIP = preload("res://scenes/playerShip.tscn")
 @onready var camera_2d: Camera2D = %Camera2D
 @onready var player_spawn: Node2D = %playerSpawn
+@onready var rock_bang_1: AudioStreamPlayer = %rockBang1
+@onready var rock_bang_2: AudioStreamPlayer = %rockBang2
+@onready var button_click: AudioStreamPlayer = %buttonClick
 
 var state:GAME_STATE = GAME_STATE.Loading
 var _current_round:int = 0
 @export var total_bullets = 4;
+
 var current_ship:PlayerShip = null
 var live_bullets = 0;
 var current_round:int:
@@ -74,6 +78,10 @@ func change_state(new_state:GAME_STATE):
 			%Loading.show()
 			%LoadingCL.show()
 		GAME_STATE.Attract:
+			var roundRocks  = 12 
+			for x in roundRocks:
+				make_rock(2, Vector2.ZERO, Vector2.UP )
+			
 			%Attract.show()
 			%AttractCL.show()
 		GAME_STATE.Playing:
@@ -100,11 +108,18 @@ func _process(delta: float) -> void:
 			pass
 		GAME_STATE.Starting:
 			#do prepare to play a round
+			destroy_all_rocks()
 			score = 0
 			current_round = 0
 			lives = 3
 			#when done
 			change_state(GAME_STATE.Playing)
+			var tween = create_tween()
+			tween.tween_property(%OvaniPlayer, "Intensity", 0.85, 2.0)
+			tween.tween_property(%OvaniPlayer, "Volume", -8, 1.0)
+			#var tween2 = create_tween()
+			#tween2.tween_property(%OvaniPlayer, "Intensity", -8, 1.0)
+			 
 			pass
 		GAME_STATE.Playing:
 			#play the game
@@ -112,6 +127,11 @@ func _process(delta: float) -> void:
 			pass
 		GAME_STATE.Stopping:
 			#clean up the game and prep the Game over UI
+			destroy_all_rocks()
+			var tween = create_tween()
+			tween.tween_property(%OvaniPlayer, "Intensity", 0, 2.0)
+			tween.tween_property(%OvaniPlayer, "Volume", -14, 1.0)
+			 
 			%LastRoundScoreLabel.text = str(score)
 			if score > HighScoreManager.high_score:
 				%UpdateHighScore.show()
@@ -129,11 +149,10 @@ func check_round():
 	if current_rocks < 1: #start new round
 		current_round = current_round +1
 		print("New Round ", current_round)
-		current_rocks = 4 + floor(current_round / 5)
-		for x in current_rocks:
-			var newRock = BIGROCK.instantiate()
-			newRock.current_velocity = Vector2.UP * current_round
-			get_parent().add_child(newRock)
+		var roundRocks  = 4 + floor(current_round / 5)
+		for x in roundRocks:
+			make_rock(2, Vector2.ZERO, Vector2.UP * current_round)
+			
 	if current_ship == null:
 		spawn_ship()
 		
@@ -144,28 +163,45 @@ func spawn_ship():
 			current_ship = PLAYER_SHIP.instantiate()
 			current_ship.position = %playerSpawn.position
 			add_child(current_ship)	
+			%shipSpawn.play()
 	else:
 		change_state(GAME_STATE.Stopping)
 		
 func destroy_player():
 	if current_ship != null:
-		current_ship.die();
-		lives = lives -1
-
+		current_ship.die(); 
+		%shipBoom.play()
+		
+		
 func destroy_rock(rock:SpaceRock):
 	if rock.bDead == false:
 		if rock.rock_size == 2:
+			rock_bang_1.play()
 			score += 5
 			for x in 2:
-				var newRock = SMALL_ROCK.instantiate()
-				newRock.position = rock.position
-				newRock.current_velocity = rock.current_velocity
-				call_deferred("add_child", newRock) 
-				current_rocks = current_rocks + 1
+				make_rock(1,rock.position, rock.current_velocity)
 		if rock.rock_size == 1:
+			rock_bang_2.play()
 			score += 10;
 		rock.die()
 		current_rocks = current_rocks - 1
+		
+func make_rock(size:int,position:Vector2, velocity:Vector2):
+	var newRock =null 
+	if size == 1:
+		newRock  =  SMALL_ROCK.instantiate()
+	else:
+		newRock  =  BIGROCK.instantiate()
+	newRock.position = position
+	newRock.current_velocity = velocity
+	call_deferred("add_child", newRock) 
+	current_rocks = current_rocks + 1
+	
+func destroy_all_rocks():
+	var rocks = get_tree().get_nodes_in_group('rocks')
+	for r in rocks:
+		r.queue_free()
+	current_rocks = 0
 	
 ## This function can be used to increment/decrement score
 func change_score(score_change: int) -> void:
@@ -174,7 +210,9 @@ func change_score(score_change: int) -> void:
 ## This function submits and saves the current highscore and player
 func update_initials() -> void:
 	HighScoreManager.submit_high_score(score,%myInitials.text) 
-
+	change_state(GAME_STATE.Attract)
+	button_click.play()
+	
 ## Use this to end the game
 func end_game() -> void:
 	change_state(GAME_STATE.Stopping)
@@ -186,10 +224,11 @@ func _on_game_over_done_button_pressed() -> void:
 	%HighScore.text = str(HighScoreManager.high_score)
 	%HighScorePlayer.text = HighScoreManager.high_player
 	change_state(GAME_STATE.Attract) 
-
+	button_click.play()
 
 func _on_play_button_pressed() -> void:
 	change_state(GAME_STATE.Starting)
+	button_click.play()
 
 
 func _on_safe_spawn_area_area_entered(area: Area2D) -> void:

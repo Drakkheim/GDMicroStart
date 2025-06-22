@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dw0r1fqa6pp36"
+path="res://.godot/imported/Sci Fi Explosion 10.wav-17f33285e04de2bbaaeb24068f515566.sample"
+
+[deps]
+
+source_file="res://resources/Sci Fi Explosion 10.wav"
+dest_files=["res://.godot/imported/Sci Fi Explosion 10.wav-17f33285e04de2bbaaeb24068f515566.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
