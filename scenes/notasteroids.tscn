@@ -1,0 +1,456 @@
+[gd_scene load_steps=16 format=3 uid="uid://c48acphch6kpv"]
+
+[ext_resource type="Script" uid="uid://bti3fs3qoxh8u" path="res://scripts/level_manager.gd" id="1_ovuqu"]
+[ext_resource type="Theme" uid="uid://38ot4rbxix72" path="res://resources/gameTheme.tres" id="2_fyo5g"]
+[ext_resource type="Texture2D" uid="uid://bycmkckex4hnh" path="res://images/space.png" id="3_nd4rh"]
+[ext_resource type="AudioStream" uid="uid://dw0r1fqa6pp36" path="res://resources/Sci Fi Explosion 10.wav" id="4_rqfxu"]
+[ext_resource type="AudioStream" uid="uid://0t1v1gc6t5k6" path="res://resources/Servo Small 7_2.wav" id="5_78jmj"]
+[ext_resource type="AudioStream" uid="uid://dhpq26kehe834" path="res://resources/Sci Fi Explosion 12.wav" id="6_et8nv"]
+[ext_resource type="AudioStream" uid="uid://bot0it6fm10ab" path="res://resources/Click 7.wav" id="7_gdgr3"]
+[ext_resource type="Script" uid="uid://2fj4rxudcfi6" path="res://OvaniPlugin/OvaniPlayer.gd" id="8_1dxqa"]
+[ext_resource type="Script" uid="uid://cwyhgykn7hnlp" path="res://OvaniPlugin/OvaniSong.gd" id="9_fh8uc"]
+[ext_resource type="AudioStream" uid="uid://c7avsa5l2u5vn" path="res://resources/Metal Vol2 Good Luck Intensity 1.wav" id="10_b7s46"]
+[ext_resource type="AudioStream" uid="uid://6s2o8pks87hv" path="res://resources/Metal Vol2 Good Luck Intensity 2.wav" id="11_r3qgc"]
+[ext_resource type="AudioStream" uid="uid://d04lw7xl2052y" path="res://resources/Metal Vol2 Good Luck Main.wav" id="12_bs0py"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sugp2"]
+radius = 117.478
+
+[sub_resource type="Environment" id="Environment_sugp2"]
+background_mode = 3
+glow_enabled = true
+glow_levels/2 = 0.3
+glow_levels/3 = 0.3
+glow_levels/5 = 0.0
+glow_blend_mode = 1
+
+[sub_resource type="Resource" id="Resource_jbj1t"]
+script = ExtResource("9_fh8uc")
+Intensity1 = ExtResource("10_b7s46")
+Intensity2 = ExtResource("11_r3qgc")
+Intensity3 = ExtResource("12_bs0py")
+ReverbTail = 0.0
+SongMode = 0
+metadata/_custom_type_script = "uid://cwyhgykn7hnlp"
+
+[node name="Main" type="Node2D"]
+
+[node name="LevelManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_ovuqu")
+total_bullets = 6
+metadata/_custom_type_script = "uid://bti3fs3qoxh8u"
+
+[node name="Loading" type="Node2D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="LoadingCL" type="CanvasLayer" parent="Loading"]
+unique_name_in_owner = true
+visible = false
+
+[node name="Attract" type="Node2D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="AttractCL" type="CanvasLayer" parent="Attract"]
+unique_name_in_owner = true
+
+[node name="control" type="Control" parent="Attract/AttractCL"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HighScoreContainer" type="PanelContainer" parent="Attract/AttractCL/control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+offset_left = -92.0
+offset_top = -127.0
+offset_right = 93.0
+offset_bottom = -59.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Attract/AttractCL/control/HighScoreContainer"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Highscore Title" type="Label" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
+text = "High Score"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="HighScore" type="Label" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 26
+text = "0"
+
+[node name="HighScorePlayer" type="Label" parent="Attract/AttractCL/control/HighScoreContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 26
+text = " ---"
+
+[node name="PlayButton" type="Button" parent="Attract/AttractCL/control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -49.0
+offset_top = 21.0
+offset_right = 51.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Play"
+
+[node name="GameTitle" type="Label" parent="Attract/AttractCL/control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -144.0
+offset_top = -209.0
+offset_right = 145.0
+offset_bottom = -164.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.776471, 0.831373, 0, 1)
+theme_override_font_sizes/font_size = 48
+text = "Space Rock Blaster"
+horizontal_alignment = 1
+
+[node name="Playing" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="PlayingCL" type="CanvasLayer" parent="Playing"]
+unique_name_in_owner = true
+
+[node name="scoreLabel" type="Label" parent="Playing/PlayingCL"]
+offset_left = 27.0
+offset_top = 21.0
+offset_right = 83.0
+offset_bottom = 44.0
+text = "SCORE:"
+
+[node name="roundLabel" type="Label" parent="Playing/PlayingCL"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.0
+offset_top = 29.0
+offset_right = -6.0
+offset_bottom = 52.0
+grow_horizontal = 2
+text = "ROUND:"
+
+[node name="Round" type="Label" parent="Playing/PlayingCL"]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 4.0
+offset_top = 29.0
+offset_right = 68.0
+offset_bottom = 52.0
+grow_horizontal = 2
+text = "1"
+
+[node name="LivesLabel" type="Label" parent="Playing/PlayingCL"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -127.0
+offset_top = 33.0
+offset_right = -71.0
+offset_bottom = 56.0
+grow_horizontal = 0
+text = "LIVES:"
+
+[node name="Lives" type="Label" parent="Playing/PlayingCL"]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 33.0
+offset_right = -8.0
+offset_bottom = 56.0
+grow_horizontal = 0
+text = "3"
+
+[node name="CurrentScoreLabel" type="Label" parent="Playing/PlayingCL"]
+unique_name_in_owner = true
+offset_left = 106.0
+offset_top = 20.0
+offset_right = 146.0
+offset_bottom = 43.0
+text = "0"
+
+[node name="DebugScoreButton" type="Button" parent="Playing/PlayingCL"]
+visible = false
+offset_left = 5.0
+offset_top = 103.0
+offset_right = 136.0
+offset_bottom = 134.0
+text = "DEBUG score +1"
+
+[node name="DebugEndGameButton" type="Button" parent="Playing/PlayingCL"]
+visible = false
+offset_left = 6.0
+offset_top = 142.0
+offset_right = 152.0
+offset_bottom = 173.0
+theme = ExtResource("2_fyo5g")
+text = "DEBUG End Game
+"
+
+[node name="playerSpawn" type="Node2D" parent="Playing"]
+unique_name_in_owner = true
+position = Vector2(555, 302)
+
+[node name="safeSpawnArea" type="Area2D" parent="Playing/playerSpawn"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Playing/playerSpawn/safeSpawnArea"]
+shape = SubResource("CircleShape2D_sugp2")
+
+[node name="GameOver" type="Node2D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="GameOverCL" type="CanvasLayer" parent="GameOver"]
+unique_name_in_owner = true
+visible = false
+
+[node name="GameOverDoneButton" type="Button" parent="GameOver/GameOverCL"]
+offset_left = 551.0
+offset_top = 358.0
+offset_right = 600.0
+offset_bottom = 389.0
+text = "Done"
+
+[node name="Game Over Label" type="Label" parent="GameOver/GameOverCL"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -102.0
+offset_top = 142.0
+offset_right = 102.0
+offset_bottom = 165.0
+grow_horizontal = 2
+text = "G   A   M   E          O   V   E   R"
+
+[node name="UpdateHighScore" type="PanelContainer" parent="GameOver/GameOverCL"]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -98.0
+offset_top = 217.0
+offset_right = 98.0
+offset_bottom = 302.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver/GameOverCL/UpdateHighScore"]
+layout_mode = 2
+
+[node name="NewHighscore label" type="Label" parent="GameOver/GameOverCL/UpdateHighScore/VBoxContainer"]
+layout_mode = 2
+text = "NEW HIGH SCORE"
+horizontal_alignment = 1
+
+[node name="LastRoundScoreLabel" type="Label" parent="GameOver/GameOverCL/UpdateHighScore/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "10000"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameOver/GameOverCL/UpdateHighScore/VBoxContainer"]
+layout_mode = 2
+
+[node name="InitialsLabel" type="Label" parent="GameOver/GameOverCL/UpdateHighScore/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Initials:"
+
+[node name="myInitials" type="LineEdit" parent="GameOver/GameOverCL/UpdateHighScore/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "AAA"
+alignment = 1
+max_length = 3
+
+[node name="UpdateInitials" type="Button" parent="GameOver/GameOverCL/UpdateHighScore/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Submit"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(576, 323)
+
+[node name="Space" type="Sprite2D" parent="."]
+z_index = -4
+position = Vector2(107, 104)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space2" type="Sprite2D" parent="Space"]
+position = Vector2(216, -3)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space3" type="Sprite2D" parent="Space"]
+position = Vector2(139, 202)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space4" type="Sprite2D" parent="Space"]
+position = Vector2(-63, 231)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space5" type="Sprite2D" parent="Space"]
+position = Vector2(11, 439)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space6" type="Sprite2D" parent="Space"]
+position = Vector2(246, 425)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space7" type="Sprite2D" parent="Space"]
+position = Vector2(457, 422)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space8" type="Sprite2D" parent="Space"]
+position = Vector2(365, 206)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space9" type="Sprite2D" parent="Space"]
+position = Vector2(413, -19)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space10" type="Sprite2D" parent="Space"]
+position = Vector2(585, 121)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space11" type="Sprite2D" parent="Space"]
+position = Vector2(637, -80)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space12" type="Sprite2D" parent="Space"]
+position = Vector2(843, -72)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space13" type="Sprite2D" parent="Space"]
+position = Vector2(1009, -16)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space14" type="Sprite2D" parent="Space"]
+position = Vector2(982, 148)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space15" type="Sprite2D" parent="Space"]
+position = Vector2(774, 132)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space16" type="Sprite2D" parent="Space"]
+position = Vector2(583, 267)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space17" type="Sprite2D" parent="Space"]
+position = Vector2(816, 335)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space18" type="Sprite2D" parent="Space"]
+position = Vector2(640, 472)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space19" type="Sprite2D" parent="Space"]
+position = Vector2(864, 458)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space20" type="Sprite2D" parent="Space"]
+position = Vector2(1004, 431)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="Space21" type="Sprite2D" parent="Space"]
+position = Vector2(1022, 264)
+texture = ExtResource("3_nd4rh")
+metadata/_edit_lock_ = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sugp2")
+
+[node name="rockBang1" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_rqfxu")
+
+[node name="shipBoom" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_rqfxu")
+volume_db = 19.0
+pitch_scale = 0.8
+
+[node name="shipSpawn" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_78jmj")
+pitch_scale = 0.4
+
+[node name="rockBang2" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("6_et8nv")
+
+[node name="buttonClick" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("7_gdgr3")
+
+[node name="OvaniPlayer" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("8_1dxqa")
+QueuedSongs = Array[ExtResource("9_fh8uc")]([SubResource("Resource_jbj1t")])
+Volume = -14.0
+LoopQueue = true
+metadata/_custom_type_script = "uid://2fj4rxudcfi6"
+
+[connection signal="pressed" from="Attract/AttractCL/control/PlayButton" to="LevelManager" method="_on_play_button_pressed"]
+[connection signal="pressed" from="Playing/PlayingCL/DebugScoreButton" to="LevelManager" method="change_score" binds= [1]]
+[connection signal="pressed" from="Playing/PlayingCL/DebugEndGameButton" to="LevelManager" method="end_game"]
+[connection signal="area_entered" from="Playing/playerSpawn/safeSpawnArea" to="LevelManager" method="_on_safe_spawn_area_area_entered"]
+[connection signal="area_exited" from="Playing/playerSpawn/safeSpawnArea" to="LevelManager" method="_on_safe_spawn_area_area_exited"]
+[connection signal="pressed" from="GameOver/GameOverCL/GameOverDoneButton" to="LevelManager" method="_on_game_over_done_button_pressed"]
+[connection signal="pressed" from="GameOver/GameOverCL/UpdateHighScore/VBoxContainer/HBoxContainer/UpdateInitials" to="LevelManager" method="update_initials"]
