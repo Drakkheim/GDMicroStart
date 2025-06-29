@@ -148,7 +148,6 @@ func _process(delta: float) -> void:
 func check_round():
 	if current_rocks < 1: #start new round
 		current_round = current_round +1
-		print("New Round ", current_round)
 		var roundRocks  = 4 + floor(current_round / 5)
 		for x in roundRocks:
 			make_rock(2, Vector2.ZERO, Vector2.UP * current_round)

@@ -77,6 +77,5 @@ func _input(event: InputEvent) -> void:
 			Globals.level_manager.live_bullets = Globals.level_manager.live_bullets + 1
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	print("BANG")
 	Globals.level_manager.destroy_player()
 	pass # Replace with function body.
